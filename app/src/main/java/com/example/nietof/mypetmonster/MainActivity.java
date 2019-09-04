@@ -1,5 +1,6 @@
 package com.example.nietof.mypetmonster;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,12 +10,15 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.daasuu.ahp.AnimateHorizontalProgressBar;
+
+
 public class MainActivity extends AppCompatActivity {
 
 
     private ImageView monsterView;
     private TextView monsterText ;
-    private ProgressBar foodProgress;
+    private  ProgressBar foodProgress;
     private ProgressBar loveProgress;
     private ProgressBar waterProgress;
     private ImageButton foodBtn;
@@ -25,7 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private int waterAmt;
     private int loveAmt;
 
+    private Handler handler = new Handler();
 
+
+    //using this 3rd party prog. bar : https://github.com/MasayukiSuda/AnimateHorizontalProgressBar
+    private AnimateHorizontalProgressBar foodProgressBar;
+    private AnimateHorizontalProgressBar waterProgressBar;
+    private AnimateHorizontalProgressBar loveProgressBar;
 
 
     @Override
@@ -52,17 +62,42 @@ public class MainActivity extends AppCompatActivity {
         loveProgress.setProgress(loveAmt);
         waterProgress.setProgress(waterAmt);
 
+
+
+
+        foodProgressBar =  findViewById(R.id.animate_progress_bar);
+        foodProgressBar.setMax(100);
+        foodProgressBar.setProgress(40);
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
     public void addFood(View view){
 
-        foodAmt= foodAmt+10;
-        Log.d("addFood" , " "+ foodAmt);
+        foodAmt= foodAmt+5;
+
+        foodProgressBar.setProgressWithAnim(foodAmt);
 
 
-        foodProgress.setProgress(foodAmt);
+
     }
+
+
+
+
+
+
+
     public void addLove(View view){
 
         loveAmt= loveAmt+10;

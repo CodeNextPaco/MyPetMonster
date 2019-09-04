@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        waterAmt =10;
-        foodAmt = 10;
-        loveAmt =10;
+        waterAmt =20;
+        foodAmt = 30;
+        loveAmt =40;
 
         foodProgress.setProgress(foodAmt);
         loveProgress.setProgress(loveAmt);

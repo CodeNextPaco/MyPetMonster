@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MyPetMonster</string>
+    <string name="need_food">Feed Me</string>
+    <string name="need_water">I\'m thirsty</string>
+    <string name="need_help">Help me!</string>
+    <string name="just_ate">Yum!</string>
+    <string name="just_drank">Ahhh. That was refreshing</string>
+    <string name="just_loved">Love you too!</string>
+    <string name="need_love">Nobody loves me!</string>
 </resources>

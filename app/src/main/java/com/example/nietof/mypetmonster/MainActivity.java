@@ -1,5 +1,6 @@
 package com.example.nietof.mypetmonster;
 
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView monsterView;
     private TextView monsterText ;
-    private  ProgressBar foodProgress;
-    private ProgressBar loveProgress;
-    private ProgressBar waterProgress;
+
     private ImageButton foodBtn;
     private ImageButton loveBtn;
     private ImageButton waterBtn;
@@ -37,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private AnimateHorizontalProgressBar waterProgressBar;
     private AnimateHorizontalProgressBar loveProgressBar;
 
+    boolean isCounterRunning  = false;
+
+    private String lowestValue;
+
+    CountDownTimer timer;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,37 +52,53 @@ public class MainActivity extends AppCompatActivity {
 
         monsterView = findViewById(R.id.monster_view) ;
         monsterText = findViewById(R.id.monster_status_text);
-        foodProgress = findViewById(R.id.food_progressBar);
-        loveProgress = findViewById(R.id.love_progressBar);
-        waterProgress = findViewById(R.id.water_progressBar);
+
         foodBtn = findViewById(R.id.btn_add_food);
         loveBtn = findViewById(R.id.btn_add_love);
         waterBtn = findViewById(R.id.btn_add_water);
 
 
 
-        waterAmt =20;
+        waterAmt =70;
         foodAmt = 30;
         loveAmt =40;
 
-        foodProgress.setProgress(foodAmt);
-        loveProgress.setProgress(loveAmt);
-        waterProgress.setProgress(waterAmt);
 
-
-
-
-        foodProgressBar =  findViewById(R.id.animate_progress_bar);
+        //setup the food progress bar
+        foodProgressBar =  findViewById(R.id.food_progress_bar);
         foodProgressBar.setMax(100);
-        foodProgressBar.setProgress(40);
+        foodProgressBar.setProgress(foodAmt);
+
+        waterProgressBar = findViewById(R.id.water_progress_bar);
+        waterProgressBar.setMax(100);
+        waterProgressBar.setProgress(waterAmt);
+
+        loveProgressBar = findViewById(R.id.love_progress_bar);
+        loveProgressBar.setMax(100);
+        loveProgressBar.setProgress(waterAmt);
+
+        timer = new CountDownTimer(500000, 5000) {
+
+            public void onTick(long millisUntilFinished) {
+                //mTextField.setText("seconds remaining: " + millisUntilFinished / 1000);
+                Log.d("timer", "seconds remaining: " + millisUntilFinished / 1000);
+
+                foodAmt= foodAmt-1;
+                waterAmt = waterAmt-1;
+                loveAmt = loveAmt-1;
+                updateMonster();
 
 
 
+            }
 
+            public void onFinish() {
+                Log.d("timer ", "done!");
+                isCounterRunning = false;
+            }
+        }.start();
 
-
-
-
+        updateMonster();
 
 
 
@@ -84,34 +107,97 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFood(View view){
 
-        foodAmt= foodAmt+5;
-
-        foodProgressBar.setProgressWithAnim(foodAmt);
+        foodAmt= foodAmt+15;
 
 
+        updateMonster();
+        restartTimer();
 
     }
-
-
-
-
 
 
 
     public void addLove(View view){
 
-        loveAmt= loveAmt+10;
+        loveAmt= loveAmt+15;
         Log.d("addLove" , " "+ loveAmt);
 
+        updateMonster();
+        restartTimer();
 
-        loveProgress.setProgress(foodAmt);
+
+
     }
     public void addWater(View view){
 
-        waterAmt= waterAmt+10;
+        waterAmt= waterAmt+15;
         Log.d("addWater" , " "+ waterAmt);
 
+        updateMonster();
+        restartTimer();
 
-        waterProgress.setProgress(waterAmt);
+
+
     }
+
+
+    public void updateMonster(){
+
+
+
+
+        //change the imageView
+
+
+
+        if(waterAmt < 50 || loveAmt < 50 || foodAmt < 50){
+
+            monsterView.setImageResource(R.drawable.monster_crying);
+        } else {
+
+            monsterView.setImageResource(R.drawable.monster_sparkle);
+
+
+        }
+
+        loveProgressBar.setProgressWithAnim(loveAmt);
+        waterProgressBar.setProgressWithAnim(waterAmt);
+        foodProgressBar.setProgressWithAnim(foodAmt);
+
+        if(waterAmt < loveAmt && waterAmt <foodAmt){
+
+            monsterText.setText(R.string.need_water);
+        } else if( foodAmt <loveAmt && foodAmt < waterAmt){
+
+            monsterText.setText(R.string.need_food);
+        } else if (loveAmt< foodAmt && loveAmt <waterAmt) {
+
+            monsterText.setText(R.string.need_love);
+        }
+
+        if(waterAmt<=0 || foodAmt <=0 || loveAmt <=0){
+
+            monsterView.setImageResource(R.drawable.monster_dead);
+            monsterText.setText("You killed me! you are the monster");
+
+        }
+
+
+
+
+    }
+
+    public void restartTimer(){
+
+        if( !isCounterRunning ){
+            isCounterRunning = true;
+            timer.start();
+        }
+        else{
+            timer.cancel(); // cancel
+            timer.start();  // then restart
+        }
+    }
+
+
 }

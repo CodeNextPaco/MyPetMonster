@@ -58,12 +58,13 @@
                 android:id="@+id/btn_add_food"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:layout_weight="0"
                 android:onClick="addFood"
-                android:src="@android:drawable/ic_input_add"
-                android:textColor="@color/colorAccent"
                 android:paddingLeft="0dp"
-                android:layout_marginTop="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/food_image"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
 
@@ -93,7 +94,8 @@
                 android:onClick="addLove"
 
                 android:paddingLeft="0dp"
-                android:src="@android:drawable/checkbox_on_background"
+                android:scaleType="fitCenter"
+                android:src="@drawable/love_image"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
@@ -119,12 +121,13 @@
                 android:id="@+id/btn_add_water"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0"
                 android:layout_marginTop="4dp"
+                android:layout_weight="0"
                 android:onClick="addWater"
-                android:src="@android:drawable/ic_input_add"
-                android:textColor="@color/colorAccent"
                 android:paddingLeft="0dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/water_image"
+                android:textColor="@color/colorAccent"
                 android:textSize="20sp" />
 
 
